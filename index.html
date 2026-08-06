@@ -1,8 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Lumi 2026</title>
+  <style>
+    body { font-family: Arial; background: #00FF88; text-align: center; padding: 30px; margin: 0; }
+  .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 500px; margin: 50px auto; box-shadow: 0 4px 10px #0003; }
+    h2 { color: #007AFF; }
+    h3 { color: #333; }
+    input { padding: 12px; width: 90%; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; margin: 10px 0; }
+    button { margin: 10px; padding: 12px 25px; font-size: 16px; background: #007AFF; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    #msg { font-weight: bold; margin-top: 15px; font-size: 18px; min-height: 25px; }
+  </style>
+</head>
+<body>
+  <div class="quiz" id="quiz">Carregando...</div>
+
 <script>
   const perguntas = [
     {
       fase: "Questao 1 - Mais facil impossivel",
-      pergunta: "Quem e seu professor preferido?",
+      pergunta: "Quem é seu professor preferido?",
       resposta: ["amanda", "anne", "bruna", "caipira", "eictor", "gabrielle", "joao", "simel", "adriana", "matheus", "moraes", "giovanna", "luciana", "leonardo", "lucas", "rodrigo", "rita", "heloiza"]
     },
     {
@@ -12,8 +31,8 @@
     },
     {
       fase: "Questao 3 - Continua simples",
-      pergunta: "Que horas acabam as aulas?", // <-- ESSA LINHA QUE FALTAVA
-      resposta: ["12:25", "meio dia e vinte e cinco"]
+      pergunta: "Que horas acabam as aulas?",
+      resposta: ["12:25", "meio dia e vinte e cinco", "12h25"]
     },
     {
       fase: "Questao 4 - Igual pilotar carro automatico",
@@ -23,12 +42,12 @@
     {
       fase: "Questao 5 - Mais facil que andar pra frente",
       pergunta: "Quem e a diretora do colegio?",
-      resposta: ["rose"]
+      resposta: ["rose", "Rose"]
     },
     {
       fase: "Questao 6 - Comecemos com a parte logica",
       pergunta: "Quantas senhas numericas de 5 digitos podem ser construidas?",
-      resposta: ["100000", "100000"] // 10^5
+      resposta: ["100000", "100000"]
     },
     {
       fase: "Questao 7 - Essa vai cansar um pouco",
@@ -37,36 +56,30 @@
     },
     {
       fase: "Questao 8 - Essa tambem",
-      pergunta: "Qual e a soma dos numeros das portas de todas as salas do FundII?",
-      resposta: ["dez", "10"]
+      pergunta: "Qual e a soma dos numeros das portas de todas as salas do FundII e médio?",
+      resposta: ["dez", "10", "18"] // deixei 18 tbm pq no seu print tinha
     },
     {
-      fase: "Questao 9 - Razoável",
-      pergunta: "Qual o décimo oitavo número da sequência de Fibonacci?",
-      resposta: ["cinquenta e cinco", "55"]
+      fase: "Questao 9 - Razoavel",
+      pergunta: "Qual é a soma de todos os números de 1 a 100?",
+      resposta: ["cinco mil e cinquenta", "5050"]
     },
     {
-      fase: "Questao 10 - Razoável",
-      pergunta: "Qual o décimo primeiro número da sequência de Fibonacci?",
+      fase: "Questao 10 - Razoavel",
+      pergunta: "Qual e o decimo primeiro numero da sequencia de Fibonacci?",
       resposta: ["oitenta e nove", "89"]
     },
     {
       fase: "Questao 11",
-      pergunta: "Qual o maior deserto do planeta?",
+      pergunta: "Qual e o maior deserto do planeta?",
       resposta: ["antartida"]
     },
     {
       fase: "Questao 12",
-      pergunta: "Se um estudante tirou 10 na ava, 5 na pesquisa e producao, e 10 na autoavaliacao, quanto ele tem de tirar na argumentativa pra ficar com 7 de média?",
-      resposta: ["cinco", "5"]
-    },
-    {
-      fase: "Questao 13",
-      pergunta: "Se um estudante tirou 10 na ava, 5 na pesquisa e producao, e 10 na autoavaliacao, quanto ele tem de tirar na argumentativa pra ficar com 7 de média?",
+      pergunta: "Se um estudante tirou 10 na ava, 5 na pesquisa e producao, e 10 na autoavaliacao, quanto ele tem de tirar na argumentativa pra ficar com 7 de media?",
       resposta: ["cinco", "5"]
     }
-  
-
+    // APAGUEI A QUESTAO 13 DUPLICADA
   ];
 
   let atual = 0;
@@ -90,8 +103,8 @@
     const botao = document.getElementById("btnEnviar");
     
     botao.onclick = checar;
-    
-    // CARACTERÍSTICA 1: ENVIAR COM ENTER
+
+    // 1. ENVIAR COM ENTER
     input.addEventListener("keypress", function(e) {
       if(e.key === "Enter") {
         checar();
@@ -124,12 +137,14 @@
       msg.style.color = "red";
       document.getElementById("respostaInput").value = ""; // limpa o campo
       
-      // CARACTERÍSTICA 2: SUMIR A MENSAGEM EM 2 SEGUNDOS
+      // 2. SUMIR A MENSAGEM EM 2 SEGUNDOS
       setTimeout(() => {
-        msg.innerHTML = ""; // apaga a mensagem
-      }, 2000); // 2000 = 2 segundos
+        msg.innerHTML = "";
+      }, 2000);
     }
   }
 
   carregarPergunta();
 </script>
+</body>
+</html>
