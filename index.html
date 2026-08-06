@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Ginásio Pokémon</title>
+  <style>
+    body { font-family: Arial; background: #FFCC00; text-align: center; padding: 50px; }
+   .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; }
+    button { margin: 10px; padding: 15px; font-size: 18px; cursor: pointer; border-radius: 8px; border: none; }
+   .certo { background: #4CAF50; color: white; }
+   .errado { background: #f44336; color: white; }
+    #proxima { display: none; }
+  </style>
+</head>
+<body>
+  <div class="quiz" id="quiz"></div>
+
+  <script>
+    const perguntas = [
+      {
+        fase: "FASE 1 - GINÁSIO PEDRA - Brock",
+        pergunta: "Qual tipo é super efetivo contra Pokémon do tipo Pedra?",
+        opcoes: ["Água", "Planta", "Lutador", "Fogo"],
+        resposta: 2 // índice da resposta certa = "Lutador"
+      },
+      {
+        fase: "FASE 2 - GINÁSIO ÁGUA - Misty",
+        pergunta: "Se um Pikachu usa 'Ataque Rápido' e depois 'Cauda de Ferro', quantos golpes foram?",
+        opcoes: ["1", "2", "3", "0"],
+        resposta: 1
+      },
+      {
+        fase: "FASE 3 - VITÓRIA",
+        pergunta: "PARABÉNS MESTRE POKÉMON!",
+        opcoes: ["Jogar Novamente"],
+        resposta: 0
+      }
+    ];
+
+    let atual = 0;
+    const quizDiv = document.getElementById("quiz");
+
+    function carregarPergunta() {
+      const p = perguntas[atual];
+      quizDiv.innerHTML = `
+        <h2>${p.fase}</h2>
+        <h3>${p.pergunta}</h3>
+        ${p.opcoes.map((op, i) =>
+          `<button onclick="checar(${i})">${op}</button>`
+        ).join("")}
+        <p id="msg"></p>
+      `;
+    }
+
+    function checar(escolha) {
+      const msg = document.getElementById("msg");
+      if(escolha === perguntas[atual].resposta) {
+        msg.innerHTML = "✅ Acertou! Avançando...";
+        msg.style.color = "green";
+        setTimeout(() => {
+          atual++;
+          if(atual < perguntas.length) carregarPergunta();
+        }, 1000);
+      } else {
+        msg.innerHTML = "❌ Errou! O Onix te derrotou. Tente de novo.";
+        msg.style.color = "red";
+      }
+    }
+
+    carregarPergunta();
+  </script>
+</body>
+</html>
