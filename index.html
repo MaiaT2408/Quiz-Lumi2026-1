@@ -2,88 +2,79 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Lumi Laços</title>
+  <title>Quiz Pokémon</title>
   <style>
-    body { font-family: Arial; background: #00FFA5; text-align: center; padding: 50px; }
-  .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; }
-    input { padding: 12px; width: 80%; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; }
-    button { margin: 10px; padding: 12px 25px; font-size: 16px; cursor: pointer; border-radius: 8px; border: none; background: #4CAF50; color: white; }
-    #msg { font-weight: bold; margin-top: 15px; }
+    body { font-family: Arial; background: #FFCC00; text-align: center; padding: 50px; }
+   .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; box-shadow: 0 4px 10px #0003; }
+    input { padding: 12px; width: 80%; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; }
+    button { margin: 10px; padding: 12px 25px; font-size: 16px; background: #CC0000; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button:hover { background: #FF0000; }
+    #msg { font-weight: bold; margin-top: 15px; font-size: 18px; min-height: 25px; }
   </style>
 </head>
 <body>
   <div class="quiz" id="quiz"></div>
 
   <script>
+    // AQUI VOCÊ EDITA AS PERGUNTAS
     const perguntas = [
       {
-        fase: "Parte 1-Mais fácil impossível",
-        pergunta: "Quem é seu professor preferido?",
-        resposta: ["Moraes", "Anne"] // Aceita várias respostas
+        fase: "FASE 1 - GINÁSIO PEDRA - Brock",
+        pergunta: "Qual tipo é super efetivo contra Pokemon do tipo Pedra?",
+        resposta: ["lutador", "tipo lutador"]
       },
       {
-        fase: "FASE 2 - MATEMÁTICA POKÉMON",
-        pergunta: "Ash tem 26 insígnias. Ele precisa de 32 pra ir pra Liga. Quantas faltam?",
-        resposta: ["6", "seis"] // Aceita número ou escrito
-      },
-      {
-        fase: "FASE 3 - ENIGMA",
-        pergunta: "Um treinador tem 3 Pokébolas. Ele captura 1 e usa 2 e erra. Quantas sobraram?",
-        resposta: ["0", "zero"]
-      },
-      {
-        fase: "FASE 4 - VITÓRIA",
-        pergunta: "PARABÉNS MESTRE POKÉMON! Digite 'VENCEU' para finalizar.",
-        resposta: ["venceu"]
+        fase: "FASE 2 - MATEMÁTICA",
+        pergunta: "Ash tem 26 insígnias. Ele precisa de 32. Quantas faltam?",
+        resposta: ["6", "seis"]
       }
     ];
 
     let atual = 0;
-    const quizDiv = document.getElementById("quiz");
+
+    function normalizar(texto) {
+      return texto.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
 
     function carregarPergunta() {
       const p = perguntas[atual];
-      quizDiv.innerHTML = `
+      document.getElementById("quiz").innerHTML = `
         <h2>${p.fase}</h2>
         <h3>${p.pergunta}</h3>
-        <input type="text" id="resposta" placeholder="Digite sua resposta aqui">
+        <input type="text" id="respostaInput">
         <br>
-        <button onclick="checar()">Enviar Resposta</button>
+        <button id="btnEnviar">Enviar Resposta</button>
         <p id="msg"></p>
       `;
-      // Aperta Enter pra enviar
-      document.getElementById("resposta").addEventListener("keypress", function(e) {
-        if(e.key === "Enter") checar();
-      });
+      document.getElementById("btnEnviar").onclick = checar; // Linka o botão
+      document.getElementById("respostaInput").focus();
     }
 
     function checar() {
-      const input = document.getElementById("resposta").value;
-      const msg = document.getElementById("msg");
+      let input = document.getElementById("respostaInput").value;
+      let respostaUsuario = normalizar(input);
+      let msg = document.getElementById("msg");
 
-      // Normaliza: tira espaço, acento e deixa minúsculo
-      const respostaUsuario = input.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-      // Confere se a resposta está no array de respostas corretas
-      const acertou = perguntas[atual].resposta.some(gabarito =>
-        respostaUsuario === gabarito.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      );
+      let acertou = perguntas[atual].resposta.some(g => normalizar(g) === respostaUsuario);
 
       if(acertou) {
-        msg.innerHTML = "✅ Acertou! Avançando...";
+        msg.innerHTML = "✅ ACERTOU!";
         msg.style.color = "green";
         setTimeout(() => {
           atual++;
-          if(atual < perguntas.length) carregarPergunta();
-        }, 1200);
+          if(atual < perguntas.length) {
+            carregarPergunta();
+          } else {
+            document.getElementById("quiz").innerHTML = "<h1>🏆 VOCÊ VENCEU!</h1>";
+          }
+        }, 1000);
       } else {
-        msg.innerHTML = "❌ Resposta errada! Tente de novo.";
+        msg.innerHTML = `❌ ERROU! Tente: ${input}`;
         msg.style.color = "red";
-        document.getElementById("resposta").value = ""; // limpa o campo
       }
     }
 
-    carregarPergunta();
+    carregarPergunta(); // Começa o jogo
   </script>
 </body>
 </html>
