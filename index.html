@@ -5,11 +5,10 @@
   <title>Quiz Lumi</title>
   <style>
     body { font-family: Arial; background: #00FFA5; text-align: center; padding: 50px; }
-   .quiz { background: orange; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; }
-    button { margin: 10px; padding: 15px; font-size: 18px; cursor: pointer; border-radius: 8px; border: none; }
-   .certo { background: #4CAF50; color: white; }
-   .errado { background: #f44336; color: white; }
-    #proxima { display: none; }
+  .quiz { background: purple; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; }
+    input { padding: 12px; width: 80%; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; }
+    button { margin: 10px; padding: 12px 25px; font-size: 16px; cursor: pointer; border-radius: 8px; border: none; background: #4CAF50; color: white; }
+    #msg { font-weight: bold; margin-top: 15px; }
   </style>
 </head>
 <body>
@@ -19,20 +18,23 @@
     const perguntas = [
       {
         fase: "Início, difícil de errar",
-        pergunta: "Quantos fios de cabelo tem na sua cabeça?",
-          resposta: Muitos
+        pergunta: "Qual o seu professor preferido?",
+        resposta: ["Anne", "Moraes", "Eictor"] // Aceita várias respostas
       },
       {
-        fase: "FASE 2 - GINÁSIO ÁGUA - Misty",
-        pergunta: "Se um Pikachu usa 'Ataque Rápido' e depois 'Cauda de Ferro', quantos golpes foram?",
-        opcoes: ["1", "2", "3", "0"],
-        resposta: 1
+        fase: "FASE 2 - MATEMÁTICA POKÉMON",
+        pergunta: "Ash tem 26 insígnias. Ele precisa de 32 pra ir pra Liga. Quantas faltam?",
+        resposta: ["6", "seis"] // Aceita número ou escrito
       },
       {
-        fase: "FASE 3 - VITÓRIA",
-        pergunta: "PARABÉNS MESTRE POKÉMON!",
-        opcoes: ["Jogar Novamente"],
-        resposta: 0
+        fase: "FASE 3 - ENIGMA",
+        pergunta: "Um treinador tem 3 Pokébolas. Ele captura 1 e usa 2 e erra. Quantas sobraram?",
+        resposta: ["0", "zero"]
+      },
+      {
+        fase: "FASE 4 - VITÓRIA",
+        pergunta: "PARABÉNS MESTRE POKÉMON! Digite 'VENCEU' para finalizar.",
+        resposta: ["venceu"]
       }
     ];
 
@@ -44,25 +46,40 @@
       quizDiv.innerHTML = `
         <h2>${p.fase}</h2>
         <h3>${p.pergunta}</h3>
-        ${p.opcoes.map((op, i) =>
-          `<button onclick="checar(${i})">${op}</button>`
-        ).join("")}
+        <input type="text" id="resposta" placeholder="Digite sua resposta aqui">
+        <br>
+        <button onclick="checar()">Enviar Resposta</button>
         <p id="msg"></p>
       `;
+      // Aperta Enter pra enviar
+      document.getElementById("resposta").addEventListener("keypress", function(e) {
+        if(e.key === "Enter") checar();
+      });
     }
 
-    function checar(escolha) {
+    function checar() {
+      const input = document.getElementById("resposta").value;
       const msg = document.getElementById("msg");
-      if(escolha === perguntas[atual].resposta) {
+
+      // Normaliza: tira espaço, acento e deixa minúsculo
+      const respostaUsuario = input.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+      // Confere se a resposta está no array de respostas corretas
+      const acertou = perguntas[atual].resposta.some(gabarito =>
+        respostaUsuario === gabarito.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      );
+
+      if(acertou) {
         msg.innerHTML = "✅ Acertou! Avançando...";
         msg.style.color = "green";
         setTimeout(() => {
           atual++;
           if(atual < perguntas.length) carregarPergunta();
-        }, 1000);
+        }, 1200);
       } else {
-        msg.innerHTML = "❌ Errou! O Onix te derrotou. Tente de novo.";
+        msg.innerHTML = "❌ Resposta errada! Tente de novo.";
         msg.style.color = "red";
+        document.getElementById("resposta").value = ""; // limpa o campo
       }
     }
 
