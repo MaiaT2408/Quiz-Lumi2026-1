@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Quiz Lumi 2026</title>
-  <style>
-    body { font-family: Arial; background: #00FF88; text-align: center; padding: 30px; margin: 0; }
-  .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 500px; margin: 50px auto; box-shadow: 0 4px 10px #0003; }
-    h2 { color: #007AFF; }
-    h3 { color: #333; }
-    input { padding: 12px; width: 90%; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; margin: 10px 0; }
-    button { margin: 10px; padding: 12px 25px; font-size: 16px; background: #007AFF; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    button:hover { background: #0056b3; }
-    #msg { font-weight: bold; margin-top: 15px; font-size: 18px; min-height: 25px; }
-  </style>
-</head>
-<body>
-  <div class="quiz" id="quiz">Carregando...</div>
-
 <script>
   const perguntas = [
     {
@@ -84,6 +65,8 @@
       pergunta: "Se um estudante tirou 10 na ava, 5 na pesquisa e producao, e 10 na autoavaliacao, quanto ele tem de tirar na argumentativa pra ficar com 7 de média?",
       resposta: ["cinco", "5"]
     }
+  
+
   ];
 
   let atual = 0;
@@ -102,8 +85,20 @@
       <button id="btnEnviar">Enviar Resposta</button>
       <p id="msg"></p>
     `;
-    document.getElementById("btnEnviar").onclick = checar;
-    document.getElementById("respostaInput").focus();
+    
+    const input = document.getElementById("respostaInput");
+    const botao = document.getElementById("btnEnviar");
+    
+    botao.onclick = checar;
+    
+    // CARACTERÍSTICA 1: ENVIAR COM ENTER
+    input.addEventListener("keypress", function(e) {
+      if(e.key === "Enter") {
+        checar();
+      }
+    });
+    
+    input.focus();
   }
 
   function checar() {
@@ -125,12 +120,16 @@
         }
       }, 1000);
     } else {
-      msg.innerHTML = `❌ ERROU! Tente de novo`;
+      msg.innerHTML = "❌ ERROU! Tente de novo";
       msg.style.color = "red";
+      document.getElementById("respostaInput").value = ""; // limpa o campo
+      
+      // CARACTERÍSTICA 2: SUMIR A MENSAGEM EM 2 SEGUNDOS
+      setTimeout(() => {
+        msg.innerHTML = ""; // apaga a mensagem
+      }, 2000); // 2000 = 2 segundos
     }
   }
 
   carregarPergunta();
 </script>
-</body>
-</html>
