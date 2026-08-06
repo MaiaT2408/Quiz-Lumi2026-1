@@ -2,104 +2,105 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Pokémon</title>
+  <title>Quiz Lumi 2026</title>
   <style>
-    body { font-family: Arial; background: #00FFA5; text-align: center; padding: 50px; }
-   .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 600px; margin: auto; box-shadow: 0 4px 10px #0003; }
-    input { padding: 12px; width: 80%; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; }
-    button { margin: 10px; padding: 12px 25px; font-size: 16px; background: #CC0000; color: white; border: none; border-radius: 8px; cursor: pointer; }
-    button:hover { background: #FF0000; }
+    body { font-family: Arial; background: #00FF88; text-align: center; padding: 30px; margin: 0; }
+  .quiz { background: white; padding: 30px; border-radius: 15px; max-width: 500px; margin: 50px auto; box-shadow: 0 4px 10px #0003; }
+    h2 { color: #007AFF; }
+    h3 { color: #333; }
+    input { padding: 12px; width: 90%; font-size: 16px; border: 2px solid #ccc; border-radius: 8px; margin: 10px 0; }
+    button { margin: 10px; padding: 12px 25px; font-size: 16px; background: #007AFF; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button:hover { background: #0056b3; }
     #msg { font-weight: bold; margin-top: 15px; font-size: 18px; min-height: 25px; }
   </style>
 </head>
 <body>
-  <div class="quiz" id="quiz"></div>
+  <div class="quiz" id="quiz">Carregando...</div>
 
-  <script>
-    // AQUI VOCÊ EDITA AS PERGUNTAS
-    const perguntas = [
-      {
-        fase: "Questão 1 - Mais fácil impossível",
-        pergunta: "Quem é seu professor preferido?",
-        resposta: ["Amanda", "Anne", "Bruna", "Caíque", "Eictor", "Gabrielle", "João", "Simei", "Adriana", "Matheus"]
-      }, 
-      {
-        fase: "Questão 2 - Fácil",
-        pergunta: "Que horas começam as aulas?",
-        resposta: ["7:25", "sete e vinte e cinco", "7h25", "07:25"]
-      }, 
-      {
-        fase: "Questão 3 - Continua simples",
-        pergunta: "Que horas acabam as aulas?",
-        resposta: ["12:25", "meio-dia e vinte e cinco", "meio dia e vinte e cinco"]
-      }, 
-      {
-        fase: "Questão 4 - Igual pilotar carro automático",
-        pergunta: "Quem é o melhor pokémon de todos os tempos?",
-        resposta: ["1", "bulbassauro", "bulbasaur"]
-      }, 
-      {
-        fase: "Questão 5 - Mais fácil que andar pra frente",
-        pergunta: "Quem é a diretora do colégio?",
-        resposta: ["Rose", "rose"]
-      }, 
-      {
-        fase: "Questão 6 - Comecemos com a parte lógica",
-        pergunta: "Quantas senhas numéricas de 5 dígitos podem ser construídas?"
-        resposta: ["30240"]
-      }, 
-      {
-        fase: "Questão 7 - Essa vai cansar um pouco",
-        pergunta: "Quantas lixeiras têm na escola considerando apenas pátio, salas de aula, e banheiros?",
-        resposta: ["dez"]
-      }
-    ];
-
-    let atual = 0;
-
-    function normalizar(texto) {
-      return texto.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+<script>
+  const perguntas = [
+    {
+      fase: "Questao 1 - Mais facil impossivel",
+      pergunta: "Quem e seu professor preferido?",
+      resposta: ["amanda", "anne", "bruna", "caipira", "eictor", "gabrielle", "joao", "simel", "adriana", "matheus"]
+    },
+    {
+      fase: "Questao 2 - Facil",
+      pergunta: "Que horas comecam as aulas?",
+      resposta: ["7:25", "sete e vinte e cinco", "7h25", "07:25"]
+    },
+    {
+      fase: "Questao 3 - Continua simples",
+      pergunta: "Que horas acabam as aulas?",
+      resposta: ["12:25", "meio dia e vinte e cinco"]
+    },
+    {
+      fase: "Questao 4 - Igual pikar carro automatico",
+      pergunta: "Quem e o melhor pokemon de todos os tempos?",
+      resposta: ["1", "bulbassauro", "bulbasaur"]
+    },
+    {
+      fase: "Questao 5 - Mais facil que andar pra frente",
+      pergunta: "Quem e a diretora do colegio?",
+      resposta: ["rose"]
+    },
+    {
+      fase: "Questao 6 - Comecemos com a parte logica",
+      pergunta: "Quantas senhas numericas de 5 digitos podem ser construidas?",
+      resposta: ["100000"]
+    },
+    {
+      fase: "Questao 7 - Essa vai cansar um pouco",
+      pergunta: "Quantas lixeiras tem na escola considerando apenas patio, salas de aula, e banheiros?",
+      resposta: ["dez", "10"]
     }
+  ];
 
-    function carregarPergunta() {
-      const p = perguntas[atual];
-      document.getElementById("quiz").innerHTML = `
-        <h2>${p.fase}</h2>
-        <h3>${p.pergunta}</h3>
-        <input type="text" id="respostaInput">
-        <br>
-        <button id="btnEnviar">Enviar Resposta</button>
-        <p id="msg"></p>
-      `;
-      document.getElementById("btnEnviar").onclick = checar; // Linka o botão
-      document.getElementById("respostaInput").focus();
+  let atual = 0;
+
+  function normalizar(texto) {
+    return texto.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function carregarPergunta() {
+    const p = perguntas[atual];
+    document.getElementById("quiz").innerHTML = `
+      <h2>${p.fase}</h2>
+      <h3>${p.pergunta}</h3>
+      <input type="text" id="respostaInput" placeholder="Digite sua resposta">
+      <br>
+      <button id="btnEnviar">Enviar Resposta</button>
+      <p id="msg"></p>
+    `;
+    document.getElementById("btnEnviar").onclick = checar;
+    document.getElementById("respostaInput").focus();
+  }
+
+  function checar() {
+    let input = document.getElementById("respostaInput").value;
+    let respostaUsuario = normalizar(input);
+    let msg = document.getElementById("msg");
+
+    let acertou = perguntas[atual].resposta.some(g => normalizar(g) === respostaUsuario);
+
+    if(acertou) {
+      msg.innerHTML = "✅ ACERTOU!";
+      msg.style.color = "green";
+      setTimeout(() => {
+        atual++;
+        if(atual < perguntas.length) {
+          carregarPergunta();
+        } else {
+          document.getElementById("quiz").innerHTML = "<h1>🏆 VOCE VENCEU!</h1>";
+        }
+      }, 1000);
+    } else {
+      msg.innerHTML = `❌ ERROU! Tente de novo`;
+      msg.style.color = "red";
     }
+  }
 
-    function checar() {
-      let input = document.getElementById("respostaInput").value;
-      let respostaUsuario = normalizar(input);
-      let msg = document.getElementById("msg");
-
-      let acertou = perguntas[atual].resposta.some(g => normalizar(g) === respostaUsuario);
-
-      if(acertou) {
-        msg.innerHTML = "✅ ACERTOU!";
-        msg.style.color = "green";
-        setTimeout(() => {
-          atual++;
-          if(atual < perguntas.length) {
-            carregarPergunta();
-          } else {
-            document.getElementById("quiz").innerHTML = "<h1>🏆 VOCÊ VENCEU!</h1>";
-          }
-        }, 1000);
-      } else {
-        msg.innerHTML = `❌ ERROU! Tente de novo`;
-        msg.style.color = "red";
-      }
-    }
-
-    carregarPergunta(); // Começa o jogo
-  </script>
+  carregarPergunta();
+</script>
 </body>
 </html>
